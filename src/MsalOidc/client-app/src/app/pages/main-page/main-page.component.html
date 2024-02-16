@@ -1,0 +1,17 @@
+
+<div class="wrapper">
+    <div class="content">
+        <div class="title">File manager</div>
+
+        <input type="text" [(ngModel)]="newFileName">
+
+        <button (click)="newFile()">Add file</button>
+        <br/>
+
+        <ul>
+            <li *ngFor="let file of files; index as i">
+                {{file}}&nbsp;<button (click)="remove(i)">Remove</button>
+            </li>
+        </ul>
+    </div>
+</div>

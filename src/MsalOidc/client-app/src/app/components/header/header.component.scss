@@ -1,0 +1,18 @@
+.wrapper{
+    width: 100%;
+    height: max-content;
+    display: flex;
+    background-color: lightpink;
+
+    .content{
+        margin: auto;
+        font-size: 30px;
+        color: white;
+        font-family: arial;
+        font-weight: bold;
+    }
+
+    .spacer{
+        display: flex;
+    }
+}

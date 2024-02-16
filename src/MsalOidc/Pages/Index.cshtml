@@ -1,0 +1,18 @@
+﻿@page
+@model OicdDemo.Pages.IndexModel
+<app-root></app-root>
+
+@section sitestyles
+{
+    @foreach(var fi in Model.MainCssWebPath)
+    {
+        <link rel="stylesheet" href="@(fi.Name)" />
+    }
+}
+
+@section scripts {
+    @foreach (var fi in Model.MainJsWebPath)
+    {
+        <script type="module" src="@(fi.Name)"></script>
+    }
+}
