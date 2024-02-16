@@ -1,0 +1,13 @@
+﻿################################################################################
+# Ce fichier .gitignore a été automatiquement créé par Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/src/MsalOidc/bin/Debug/net6.0
+/src/MsalOidc/client-app/.vscode
+/src/MsalOidc/obj
+/src/MsalOidc.Entities/bin/Debug/net6.0
+/src/MsalOidc.Entities/obj/Debug/net6.0
+/src/MsalOidc.Entities/obj/Release/net6.0
+/src/MsalOidc.Entities/obj
+/src/.vs
