@@ -2,15 +2,19 @@
 @model OicdDemo.Pages.IndexModel
 <app-root></app-root>
 
-@section sitestyles
+@section headFiles
 {
     @foreach(var fi in Model.MainCssWebPath)
     {
         <link rel="stylesheet" href="@(fi.Name)" />
     }
+    @foreach (var fi in Model.ChunkJsWebPath)
+    {
+        <link rel="modulepreload" href="@(fi.Name)">
+    }
 }
 
-@section scripts {
+@section bodyFiles {
     @foreach (var fi in Model.MainJsWebPath)
     {
         <script type="module" src="@(fi.Name)"></script>
