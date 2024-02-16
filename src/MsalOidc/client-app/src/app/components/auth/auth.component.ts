@@ -132,14 +132,6 @@ export class AuthComponent implements OnInit, OnDestroy {
         this.setLoginDisplay();
         this.checkAndSetActiveAccount();
       });
-
-      /////////// DO REDIRECT TO AUTHENTICATION ////////
-      const msalInstance = MSALInstanceFactory();
-      msalInstance.initialize().then(()=>{
-        setTimeout(() => {
-          //this.myLoginButton.nativeElement.click();
-        }, 200);
-      });
   }
 
   setLoginDisplay() {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -9,9 +9,13 @@ import { CommonModule } from '@angular/common';
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss'
 })
-export class MainPageComponent {
+export class MainPageComponent implements OnInit{
   public newFileName:string='';
   public files:string[] = [];
+
+  ngOnInit(): void {
+
+  }
 
   public newFile(){
     this.files.push(this.newFileName);
