@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Logging;
+using MsalOidc.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -82,6 +83,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseMiddleware<HashNonceMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
