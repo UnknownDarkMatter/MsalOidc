@@ -7,7 +7,7 @@ export const environment = {
         }
     },
     apiConfig: {
-        scopes: ['oidc'],
+        scopes: ['openid'],
         uri: 'https://localhost:5114'
     }
   };

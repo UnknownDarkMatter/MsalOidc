@@ -1,93 +1,13 @@
-import { Component, OnInit, Inject, OnDestroy, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Subject } from 'rxjs';
 import { MsalService, MsalBroadcastService, MSAL_GUARD_CONFIG, MsalGuardConfiguration } from '@azure/msal-angular';
 import { AuthenticationResult, InteractionStatus, PopupRequest, RedirectRequest, EventMessage, EventType } from '@azure/msal-browser';
-import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-
-
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { IPublicClientApplication, PublicClientApplication, InteractionType, BrowserCacheLocation, LogLevel } from '@azure/msal-browser';
-import { MsalGuard, MsalInterceptor, MsalInterceptorConfiguration, MsalModule, MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG, MsalRedirectComponent } from '@azure/msal-angular';
-import { environment } from '../../../environments/environment';
-
-
-export function loggerCallback(logLevel: LogLevel, message: string) {
-  console.log(message);
-}
-
-export function MSALInstanceFactory(): IPublicClientApplication {
-  return new PublicClientApplication({
-    auth: {
-      clientId: environment.msalConfig.auth.clientId,
-      authority: environment.msalConfig.auth.authority,
-      redirectUri: '/',
-      postLogoutRedirectUri: '/'
-    },
-    cache: {
-      cacheLocation: BrowserCacheLocation.LocalStorage
-    },
-    system: {
-      allowNativeBroker: false, // Disables WAM Broker
-      loggerOptions: {
-        loggerCallback,
-        logLevel: LogLevel.Info,
-        piiLoggingEnabled: false
-      }
-    }
-  });
-}
-
-export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
-  const protectedResourceMap = new Map<string, Array<string>>();
-  protectedResourceMap.set(environment.apiConfig.uri, environment.apiConfig.scopes);
-
-  return {
-    interactionType: InteractionType.Redirect,
-    protectedResourceMap
-  };
-}
-
-export function MSALGuardConfigFactory(): MsalGuardConfiguration {
-  return { 
-    interactionType: InteractionType.Redirect,
-    authRequest: {
-      scopes: [...environment.apiConfig.scopes]
-    },
-    loginFailedRoute: '/login-failed'
-  };
-}
-
-
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [
-    HttpClientModule,
-    MsalModule
-  ],
-  providers:[
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: MsalInterceptor,
-      multi: true
-    },
-    {
-      provide: MSAL_INSTANCE,
-      useFactory: MSALInstanceFactory
-    },
-    {
-      provide: MSAL_GUARD_CONFIG,
-      useFactory: MSALGuardConfigFactory
-    },
-    {
-      provide: MSAL_INTERCEPTOR_CONFIG,
-      useFactory: MSALInterceptorConfigFactory
-    },
-    MsalService,
-    MsalGuard,
-    MsalBroadcastService
-  ],
+  imports: [ ],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
 })
@@ -95,8 +15,6 @@ export class AuthComponent implements OnInit, OnDestroy {
   isIframe = false;
   loginDisplay = false;
   private readonly _destroying$ = new Subject<void>();
-  @ViewChild('myLoginButton') myLoginButton!: ElementRef;
-
 
   constructor(
     @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
@@ -107,6 +25,8 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit (): void {
+    this.authService.handleRedirectObservable().subscribe();
+
     this.isIframe = window !== window.parent && !window.opener; // Remove this line to use Angular Universal
     this.setLoginDisplay();
 
@@ -131,7 +51,7 @@ export class AuthComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.setLoginDisplay();
         this.checkAndSetActiveAccount();
-      });
+      })
   }
 
   setLoginDisplay() {
@@ -187,5 +107,4 @@ export class AuthComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this._destroying$.next(undefined);
     this._destroying$.complete();
-  }
-}
+  }}
