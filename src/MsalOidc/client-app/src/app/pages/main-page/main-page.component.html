@@ -9,7 +9,7 @@
 
         <ul>
             <li *ngFor="let file of files; index as i">
-                {{file}}&nbsp;<button (click)="remove(i)">Remove</button>
+                {{file.friendlyName}}&nbsp;<button (click)="remove(i)">Remove</button>
             </li>
         </ul>
     </div>
