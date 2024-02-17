@@ -6,7 +6,7 @@ namespace OicdDemo.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-//[Authorize]
+[Authorize]
 public class FileController : ControllerBase
 {
     private static List<FileDto> _files = new List<FileDto>()

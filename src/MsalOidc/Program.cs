@@ -5,9 +5,11 @@ using OicdDemo.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
+IdentityModelEventSource.ShowPII = true;
 
 var azureSettings = builder.Configuration.GetSection("AzureAd").Get<AzureAdConfiguration>();
 

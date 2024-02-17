@@ -9,7 +9,7 @@ import { IPublicClientApplication, PublicClientApplication, InteractionType, Bro
 import { MsalGuard, MsalInterceptor, MsalBroadcastService, MsalInterceptorConfiguration, MsalModule, MsalService, MSAL_GUARD_CONFIG, MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG, MsalGuardConfiguration, MsalRedirectComponent } from '@azure/msal-angular';
 import { environment } from '../environments/environment';
 import { HttpService } from './services/http-service';
-
+import { AuthInterceptor } from './services/auth-interceptor';
 
 export function loggerCallback(logLevel: LogLevel, message: string) {
   console.log(message);
@@ -81,6 +81,7 @@ export const appConfig: ApplicationConfig = {
     MsalService,
     MsalGuard,
     MsalBroadcastService,
-    { provide: HttpService }
+    { provide: HttpService },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ]
 };
