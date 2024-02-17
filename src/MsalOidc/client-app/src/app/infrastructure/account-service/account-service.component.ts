@@ -117,7 +117,16 @@ export class AccountServiceComponent implements OnInit {
       .subscribe(() => {
         this.setLoginDisplay();
       })
-    
+
+      /*  BrowserAuthError: uninitialized_public_client_application: 
+      You must call and await the initialize function before attempting to call any other MSAL API.  
+      For more visit: aka.ms/msaljs/browser-errors
+      
+      const msalInstance = MSALInstanceFactory();
+      msalInstance.initialize().then(() => {
+        console.log('msalInstance.initialized');
+      });
+      */
   }
   
   setLoginDisplay() {
