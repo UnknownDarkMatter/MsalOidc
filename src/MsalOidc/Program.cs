@@ -30,7 +30,7 @@ builder.Services.AddAuthentication(options =>
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             ValidIssuer = azureSettings.Issuer,
-            ValidAudience = azureSettings.Audience
+            ValidAudience = azureSettings.Audience,
         };
     });
 
